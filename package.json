@@ -1,0 +1,49 @@
+{
+  "name": "@codelynther/dclean",
+  "version": "0.1.0",
+  "private": false,
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "description": "Clean up development environment bloat - node_modules, Python venvs, and more",
+  "main": "src/index.js",
+  "bin": {
+    "dclean": "./bin/cli.js"
+  },
+  "files": [
+    "bin",
+    "src"
+  ],
+  "scripts": {
+    "test": "jest --passWithNoTests",
+    "lint": "eslint .",
+    "start": "node bin/cli.js"
+  },
+  "keywords": [
+    "cleanup",
+    "node_modules",
+    "disk-space",
+    "developer-tools",
+    "cli"
+  ],
+  "author": "CodeLynther",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/CodeLynther/dclean.git"
+  },
+  "homepage": "https://github.com/CodeLynther/dclean#readme",
+  "bugs": "https://github.com/CodeLynther/dclean/issues",
+  "dependencies": {
+    "chalk": "^4.1.2",
+    "cli-table3": "^0.6.5",
+    "commander": "^14.0.3",
+    "inquirer": "^13.2.4",
+    "trash": "^10.1.0"
+  },
+  "devDependencies": {
+    "eslint": "^10.0.0",
+    "jest": "^30.2.0",
+    "prettier": "^3.8.1"
+  }
+}
