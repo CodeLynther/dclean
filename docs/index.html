@@ -78,6 +78,18 @@
             background: #475569;
         }
     </style>
+    <!-- Google tag (gtag.js) -->
+    <script async src="https://www.googletagmanager.com/gtag/js?id=G-JFS4CDX1LC"></script>
+    <script>
+        window.dataLayer = window.dataLayer || [];
+        function gtag() { dataLayer.push(arguments); }
+        gtag('js', new Date());
+
+        gtag('config', 'G-JFS4CDX1LC', {
+            'page_title': document.title,
+            'page_path': window.location.pathname + window.location.hash
+        });
+    </script>
 </head>
 
 <body class="bg-gray-900 text-white selection:bg-cyan-500 selection:text-white overflow-x-hidden">
@@ -358,10 +370,43 @@
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
-                document.querySelector(this.getAttribute('href')).scrollIntoView({
-                    behavior: 'smooth'
-                });
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+
+                    // Track hash change in Google Analytics
+                    const sectionTitle = this.textContent.trim() || targetId.replace('#', '');
+                    const pageTitle = sectionTitle + " | D Clean";
+
+                    gtag('event', 'page_view', {
+                        'page_title': pageTitle,
+                        'page_location': window.location.origin + window.location.pathname + targetId,
+                        'page_path': window.location.pathname + targetId
+                    });
+
+                    // Update URL without jumping
+                    history.pushState(null, null, targetId);
+                }
             });
+        });
+
+        // Track initial page view with hash if present
+        window.addEventListener('load', () => {
+            if (window.location.hash) {
+                const targetId = window.location.hash;
+                const link = document.querySelector(`a[href="${targetId}"]`);
+                const sectionTitle = link ? link.textContent.trim() : targetId.replace('#', '');
+
+                gtag('event', 'page_view', {
+                    'page_title': sectionTitle + " | D Clean",
+                    'page_location': window.location.href,
+                    'page_path': window.location.pathname + targetId
+                });
+            }
         });
     </script>
 </body>
