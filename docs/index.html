@@ -260,11 +260,12 @@
                 <div
                     class="bg-gray-800/50 p-8 rounded-2xl border border-gray-700 hover:border-cyan-500/30 transition-all hover:bg-gray-800 group">
                     <div
-                        class="bg-gray-700 rounded-lg p-3 inline-block mb-4 group-hover:bg-purple-900/50 transition-colors">
-                        <span class="text-3xl">📜</span>
+                        class="bg-gray-700 rounded-lg p-3 inline-block mb-4 group-hover:bg-pink-900/50 transition-colors">
+                        <span class="text-3xl">🤖</span>
                     </div>
-                    <h3 class="text-xl font-bold text-white mb-2">History Log</h3>
-                    <p class="text-gray-400">Track your cleanup sessions and see total space reclaimed over time.</p>
+                    <h3 class="text-xl font-bold text-white mb-2">Background Monitor</h3>
+                    <p class="text-gray-400">Run via cron to get native OS notifications when bloat exceeds your
+                        thresholds. (Zero-config!)</p>
                 </div>
             </div>
         </div>
@@ -335,8 +336,9 @@
                 </div>
                 <!-- Cmd 4 -->
                 <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
-                    <code class="text-cyan-400 font-mono block mb-2">dclean --history</code>
-                    <p class="text-gray-400 text-sm">View your cleanup history and total space reclaimed.</p>
+                    <code class="text-cyan-400 font-mono block mb-2">dclean --monitor --silent</code>
+                    <p class="text-gray-400 text-sm">Run implicitly via cron. Scans and sends an OS alert if you have
+                        severe bloat.</p>
                 </div>
             </div>
 

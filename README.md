@@ -90,11 +90,55 @@ dclean --no-interactive       # Only scan and display, no cleanup prompts
 dclean --yes                  # Auto-confirm move to Trash (use with caution)
 dclean --verbose              # Debug output and full stack on errors
 dclean --init                 # Interactively set scan paths and save to ~/.devclean.json
-dclean --history              # Show cleanup history and total space saved
-dclean --help                 # Show all options
+dclean --monitor           # Background monitor mode: notify if bloat exceeds thresholds
+dclean --history           # Show cleanup history and total space saved
+dclean --help              # Show all options
 ```
 
 Results are **sorted by size (largest first)**. Items are **moved to Trash**, not permanently deleted.
+
+## Background Monitoring
+
+Prevent "disk full" crises by running D Clean in the background. In monitor mode, it will scan your paths and fire a native system notification if bloat is detected, but it will **never delete files**.
+
+```bash
+dclean --monitor --silent
+```
+
+### How it works (The Defaults)
+By default, `--monitor` automatically enables **all scanners** (Xcode, NVM, Node, Python, etc.) and checks against hardcoded "Good Defaults":
+- **Category Alert**: Any single category (e.g. Xcode DerivedData) exceeds **5 GB**.
+- **Total Alert**: Grand total of all reclaimable space exceeds **10 GB**.
+
+### Setup with Cron (recommended)
+
+Run a check every Monday at 9 AM:
+
+1. Open your crontab: `crontab -e`
+2. Add this line:
+   ```bash
+   0 18 * * 0 /full/path/to/node /full/path/to/dclean --monitor --silent
+   ```
+   *This schedule (`0 18 * * 0`) runs every **Sunday at 18:00 (6 PM)** — perfect for a fresh start to the week.*
+   
+**How to find your paths:**
+- **D Clean Path**: Run `which dclean`. If you used `npm link` or `npm install -g`, this will give you the absolute path.
+- **Node Path**: Run `which node`. 
+
+*Note for NVM users:* Cron runs in a minimal environment and won't see your `nvm` setup. You **must** use the absolute paths discovered above to ensure it works in the background.
+
+### Advanced Tips
+
+**1. Scoped Monitoring**
+Scanning everything can be slow. If you only care about "heavy hitters", tell the monitor exactly what to watch:
+```bash
+dclean --monitor --xcode --nvm --silent
+```
+
+**2. Cross-Platform Support**
+- **macOS**: Uses persistent alerts that stay on screen until dismissed.
+- **Linux**: Uses `notify-send` (native desktop notifications).
+- **Headless/Other**: Gracefully falls back to high-visibility terminal logs.
 
 ## For developers
 
