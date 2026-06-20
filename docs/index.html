@@ -4,9 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="description" content="CLI to clean node_modules, Xcode, NVM, venvs, and build artifacts. Trash-safe, interactive.">
+    <meta name="description" content="Install: npm install -g dclean. Clean node_modules, Xcode, NVM, venvs. Trash-safe CLI for macOS and Linux.">
     <meta property="og:title" content="D Clean">
-    <meta property="og:description" content="Find and remove dev bloat. Trash-safe CLI for macOS and Linux.">
+    <meta property="og:description" content="Install with npm install -g dclean. Trash-safe dev cleanup for macOS and Linux.">
     <meta property="og:url" content="https://codelynther.github.io/dclean/">
     <meta property="og:type" content="website">
     <meta name="twitter:card" content="summary">
@@ -173,7 +173,7 @@
                         📋
                     </button>
                 </div>
-                <p class="text-gray-500 text-sm mb-8 font-mono">or: npm install -g @codelynther/dclean &nbsp;|&nbsp; npx @codelynther/dclean --init</p>
+                <p class="text-gray-500 text-sm mb-8 font-mono">also: npm install -g @codelynther/dclean &nbsp;|&nbsp; npx dclean --init</p>
 
                 <div class="flex justify-center gap-4 animate-slide-up" style="animation-delay: 0.2s;">
                     <a href="#usage"
@@ -322,24 +322,29 @@
                 <!-- Cmd 1 -->
                 <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
                     <code class="text-cyan-400 font-mono block mb-2">dclean --init</code>
-                    <p class="text-gray-400 text-sm">First run setup. Choose which folders to scan and save to config.
-                    </p>
+                    <p class="text-gray-400 text-sm">First run setup. Choose folders to scan and save to <code class="text-gray-300">~/.dclean/config.json</code>. Required before cron monitor.</p>
                 </div>
                 <!-- Cmd 2 -->
                 <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
                     <code class="text-cyan-400 font-mono block mb-2">dclean --node-modules</code>
-                    <p class="text-gray-400 text-sm">Scan only node_modules across your configured paths.</p>
+                    <p class="text-gray-400 text-sm">Scan node_modules across your configured paths.</p>
                 </div>
                 <!-- Cmd 3 -->
                 <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
-                    <code class="text-cyan-400 font-mono block mb-2">dclean --nvm</code>
-                    <p class="text-gray-400 text-sm">Check for old, unused Node.js versions managed by NVM.</p>
+                    <code class="text-cyan-400 font-mono block mb-2">dclean --history</code>
+                    <p class="text-gray-400 text-sm">View past cleanups and total space reclaimed.</p>
                 </div>
                 <!-- Cmd 4 -->
                 <div class="bg-gray-800 p-6 rounded-lg border border-gray-700">
                     <code class="text-cyan-400 font-mono block mb-2">dclean --monitor --silent</code>
-                    <p class="text-gray-400 text-sm">Run via cron. Scans all categories and sends an OS notification when thresholds are hit.</p>
+                    <p class="text-gray-400 text-sm">Cron-friendly. Notifies when one category exceeds 5 GB or total reclaimable space exceeds 10 GB. Never deletes.</p>
                 </div>
+            </div>
+
+            <div class="mt-10 max-w-2xl mx-auto bg-gray-800/50 border border-gray-700 rounded-xl p-6 text-left">
+                <h3 class="text-lg font-bold text-white mb-2">Cron setup</h3>
+                <p class="text-gray-400 text-sm mb-4">Run <code class="text-gray-300">dclean --init</code> first. Then add a cron line with absolute paths from <code class="text-gray-300">which node</code> and <code class="text-gray-300">which dclean</code>:</p>
+                <code class="text-cyan-400 font-mono text-sm block bg-gray-950 p-3 rounded border border-gray-700">0 18 * * 0 /path/to/node /path/to/dclean --monitor --silent</code>
             </div>
 
             <div class="mt-12 text-center">
@@ -362,7 +367,7 @@
                 <a href="https://github.com/CodeLynther/dclean/issues"
                     class="text-gray-400 hover:text-white transition-colors">Issues</a>
                 <a href="https://www.npmjs.com/package/dclean"
-                    class="text-gray-400 hover:text-white transition-colors">npm (dclean)</a>
+                    class="text-gray-400 hover:text-white transition-colors">npm</a>
                 <a href="https://www.npmjs.com/package/@codelynther/dclean"
                     class="text-gray-400 hover:text-white transition-colors">npm (scoped)</a>
             </div>

@@ -1,7 +1,7 @@
 # D Clean
 
-[![npm version](https://img.shields.io/npm/v/@codelynther/dclean)](https://www.npmjs.com/package/@codelynther/dclean)
-[![npm downloads](https://img.shields.io/npm/dm/@codelynther/dclean)](https://www.npmjs.com/package/@codelynther/dclean)
+[![npm version](https://img.shields.io/npm/v/dclean)](https://www.npmjs.com/package/dclean)
+[![npm downloads](https://img.shields.io/npm/dm/dclean)](https://www.npmjs.com/package/dclean)
 [![website](https://img.shields.io/website?url=https://codelynther.github.io/dclean/)](https://codelynther.github.io/dclean/)
 [![CI](https://github.com/CodeLynther/dclean/actions/workflows/ci.yml/badge.svg)](https://github.com/CodeLynther/dclean/actions/workflows/ci.yml)
 
@@ -25,20 +25,20 @@ CLI to find and remove development bloat. Scans configured paths, shows sizes in
 ## Installation
 
 ```bash
-npm install -g @codelynther/dclean
+npm install -g dclean
 ```
 
-Shorter package name (same CLI):
+Scoped package (same CLI):
 
 ```bash
-npm install -g dclean
+npm install -g @codelynther/dclean
 ```
 
 Try without installing:
 
 ```bash
-npx @codelynther/dclean --init
-npx @codelynther/dclean --node-modules --dry-run
+npx dclean --init
+npx dclean --node-modules --dry-run
 ```
 
 From source:
@@ -104,6 +104,8 @@ Results are sorted by size. Confirmed items go to Trash, not permanent delete.
 ## Monitor mode
 
 Scan on a schedule and get a system notification when bloat crosses thresholds. Monitor mode never deletes files.
+
+**Setup:** run `dclean --init` once before using monitor in cron. Monitor needs configured scan paths (or pass `--path`).
 
 ```bash
 dclean --monitor --silent

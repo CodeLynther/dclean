@@ -33,19 +33,36 @@ Please run `npm run lint` and `npm test` before submitting a PR.
 - The project uses ESLint and Prettier. Run `npm run lint` to check.
 - Prefer existing patterns in the codebase (e.g. CommonJS, async/await, chalk for output).
 
-## Technical Architecture
+## npm packages
 
-D Clean is designed as a modular, registry-driven CLI tool.
+This repo publishes two npm packages on each release:
 
-### Scanner Registry
-All scanning logic is encapsulated in **Scanner Classes** inheriting from `BaseScanner`. Scanners are registered in `src/scanners/index.js` and orchestrated via `runAllScans`. This decoupling allows for easy addition of new scan types (e.g., specific language build artifacts) without modifying the main delivery loop.
+| Package | Role |
+|---------|------|
+| `dclean` | Public install name (`packages/dclean`, thin wrapper) |
+| `@codelynther/dclean` | Core package with all source code |
 
-### Safety Model
-- **Non-Destructive**: The tool uses the `trash` package to move folders to the system Trash rather than performing a permanent `rm -rf`.
-- **Validation Path**: Every path is validated against `isPathSafeForDeletion` in `src/cleaner/safeDelete.js`, preventing accidental modifications to system or protected directories (e.g., `~/.ssh`, `/usr/local`).
-- **Interactive First**: The CLI defaults to interactive confirmation, requiring explicit user intent for every deletion action.
+Keep versions in sync. The publish workflow releases `@codelynther/dclean` first, then `dclean`.
+
+## Technical architecture
+
+D Clean is a modular, registry-driven CLI tool.
+
+### Scanner registry
+
+Scanning logic lives in scanner classes extending `BaseScanner`. Scanners are registered in `src/scanners/index.js` and run via `runAllScans`.
+
+### Monitor mode
+
+`--monitor` scans configured paths and sends a system notification when bloat crosses thresholds. It never deletes files. Cron usage requires scan paths from `dclean --init` (or `--path`).
+
+### Safety model
+
+- **Non-destructive:** uses the `trash` package to move folders to Trash, not `rm -rf`.
+- **Path validation:** every path is checked by `validatePathForDeletion` in `src/cleaner/safeDelete.js` before deletion.
+- **Interactive first:** the CLI defaults to interactive confirmation unless `--yes` is passed.
 
 ### Performance
-- **Asynchronous Walking**: Directory tree traversal is performed asynchronously using native `fs.promises` to maximize I/O throughput.
-- **Size Caching**: Directory sizes are cached during a single session to prevent redundant calculations during the filtering and confirmation phases.
 
+- **Async walking:** directory traversal uses `fs.promises`.
+- **Size caching:** directory sizes are cached during a scan session.
