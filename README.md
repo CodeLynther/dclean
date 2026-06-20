@@ -1,7 +1,8 @@
 # D Clean
 
-[![npm version](https://img.shields.io/npm/v/dclean-cli)](https://www.npmjs.com/package/dclean-cli)
-[![npm downloads](https://img.shields.io/npm/dm/dclean-cli)](https://www.npmjs.com/package/dclean-cli)
+[![npm version](https://img.shields.io/npm/v/@codelynther/dclean)](https://www.npmjs.com/package/@codelynther/dclean)
+[![npm downloads](https://img.shields.io/npm/dm/@codelynther/dclean)](https://www.npmjs.com/package/@codelynther/dclean)
+[![dclean-cli](https://img.shields.io/npm/v/dclean-cli?label=dclean-cli)](https://www.npmjs.com/package/dclean-cli)
 [![website](https://img.shields.io/website?url=https://codelynther.github.io/dclean/)](https://codelynther.github.io/dclean/)
 [![CI](https://github.com/CodeLynther/dclean/actions/workflows/ci.yml/badge.svg)](https://github.com/CodeLynther/dclean/actions/workflows/ci.yml)
 
