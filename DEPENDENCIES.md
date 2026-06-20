@@ -10,4 +10,4 @@ Runtime dependencies for `@codelynther/dclean`:
 | [inquirer](https://www.npmjs.com/package/inquirer) | Interactive prompts |
 | [trash](https://www.npmjs.com/package/trash) | Move files to Trash (macOS/Linux) |
 
-The `dclean-cli` and `@codelynther/dev-cleaner` npm packages are recommended install names. Each is a thin wrapper around `@codelynther/dclean` and adds no extra dependencies of its own. Both provide the `dclean` command.
+The `dclean-cli` npm package is the recommended install name. It is a thin wrapper around `@codelynther/dclean` and adds no extra dependencies of its own.

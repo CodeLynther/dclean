@@ -5,7 +5,7 @@
   "engines": {
     "node": ">=20.0.0"
   },
-  "description": "Clean dev bloat: node_modules, Xcode, NVM, venvs, build artifacts. Also on npm as dclean-cli and @codelynther/dev-cleaner.",
+  "description": "Clean dev bloat: node_modules, Xcode, NVM, venvs, build artifacts. Also on npm as dclean-cli.",
   "main": "src/index.js",
   "bin": {
     "dclean": "./bin/cli.js"
