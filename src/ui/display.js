@@ -72,7 +72,7 @@ function sortBySizeDesc(items) {
 function displayResults(scanResults) {
   const basePath = scanResults.basePath;
   const scanRoots = Array.isArray(basePath) ? basePath : basePath ? [basePath] : [];
-  const pathLabel = scanResults.basePathLabel || (scanRoots[0] ? toShortLabel(scanRoots[0]) : '—');
+  const pathLabel = scanResults.basePathLabel || (scanRoots[0] ? toShortLabel(scanRoots[0]) : '(global)');
 
   const { nodeModules, pythonVenvs, nvmVersions, pods, aiDevTools, totalSize } = scanResults;
   const hasDeletable =
@@ -84,7 +84,7 @@ function displayResults(scanResults) {
 
   console.log(chalk.bold('\n🔍 Scan Results'));
   if (!onlyAiDevToolsResults) {
-    if (pathLabel && pathLabel !== '—') console.log(chalk.gray('Path: ' + pathLabel));
+    if (pathLabel && pathLabel !== '(global)') console.log(chalk.gray('Path: ' + pathLabel));
     console.log(chalk.gray('Sorted by size (largest first). Pick what to delete below.'));
   }
   console.log(chalk.gray('━'.repeat(52)));
@@ -178,7 +178,7 @@ function displayResults(scanResults) {
 
   if (aiDevTools && aiDevTools.count > 0) {
     const sorted = sortBySizeDesc(aiDevTools.items);
-    console.log(chalk.cyan('\n🤖 AI dev tools (' + aiDevTools.count + ') — for review only'));
+    console.log(chalk.cyan('\n🤖 AI dev tools (' + aiDevTools.count + ') (for review only)'));
     console.log(chalk.yellow('   ⚠  We do not offer deletion for these. Review and delete at your own risk (e.g. from your file manager) if needed.'));
     const table = new Table({
       head: [chalk.white('Tool / path'), chalk.white('Size'), chalk.white('Last used')],

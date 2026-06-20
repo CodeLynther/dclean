@@ -12,21 +12,37 @@ jobs:
       id-token: write
     steps:
       - uses: actions/checkout@v4
-      
+
       - uses: actions/setup-node@v4
         with:
           node-version: '20.x'
           registry-url: 'https://registry.npmjs.org'
 
-      - name: Install Dependencies
+      - name: Install dependencies
         run: npm ci
 
-      - name: Run Tests
+      - name: Run tests
         run: npm test
 
-      # This step will fail if the package is still marked "private": true
-      # ensuring you don't accidentally publish before you intend to.
-      - name: Publish to NPM
+      - name: Verify tarball includes config
+        run: |
+          npm pack --dry-run 2>&1 | grep -q 'config/aiDevToolsPaths.js'
+          PACK=$(npm pack --silent)
+          tar -tzf "$PACK" | grep -q 'package/config/aiDevToolsPaths.js'
+          mkdir -p pack-test && cd pack-test
+          npm init -y >/dev/null 2>&1
+          npm install "../${PACK}"
+          node -e "require('./node_modules/@codelynther/dclean/src/scanners/aiDevTools.js')"
+
+      - name: Publish @codelynther/dclean
         run: npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish dclean alias
+        working-directory: packages/dclean
+        run: |
+          npm install
+          npm publish --access public
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
