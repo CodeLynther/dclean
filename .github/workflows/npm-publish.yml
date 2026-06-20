@@ -39,8 +39,16 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish dclean alias
-        working-directory: packages/dclean
+      - name: Publish dclean-cli
+        working-directory: packages/dclean-cli
+        run: |
+          npm install
+          npm publish --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      - name: Publish dev-cleaner
+        working-directory: packages/dev-cleaner
         run: |
           npm install
           npm publish --access public

@@ -21,6 +21,7 @@ dist/
 build/
 coverage/
 *.tgz
+pack-test/
 
 # Internal docs (not for public repo)
 .internal-docs/

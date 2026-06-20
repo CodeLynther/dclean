@@ -1,9 +1,10 @@
 {
-  "name": "dclean",
+  "name": "dev-cleaner",
   "version": "0.2.0",
   "description": "Clean dev bloat: node_modules, Xcode, NVM, venvs. Moves items to Trash.",
   "bin": {
-    "dclean": "./bin/dclean.js"
+    "dclean": "./bin/dclean.js",
+    "dev-cleaner": "./bin/dclean.js"
   },
   "files": [
     "bin"
@@ -18,14 +19,15 @@
     "cli",
     "venv",
     "flutter",
-    "rust"
+    "rust",
+    "dev-cleaner"
   ],
   "author": "CodeLynther",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/CodeLynther/dclean.git",
-    "directory": "packages/dclean"
+    "directory": "packages/dev-cleaner"
   },
   "homepage": "https://codelynther.github.io/dclean/",
   "bugs": "https://github.com/CodeLynther/dclean/issues",

@@ -1,7 +1,7 @@
 # D Clean
 
-[![npm version](https://img.shields.io/npm/v/dclean)](https://www.npmjs.com/package/dclean)
-[![npm downloads](https://img.shields.io/npm/dm/dclean)](https://www.npmjs.com/package/dclean)
+[![npm version](https://img.shields.io/npm/v/dclean-cli)](https://www.npmjs.com/package/dclean-cli)
+[![npm downloads](https://img.shields.io/npm/dm/dclean-cli)](https://www.npmjs.com/package/dclean-cli)
 [![website](https://img.shields.io/website?url=https://codelynther.github.io/dclean/)](https://codelynther.github.io/dclean/)
 [![CI](https://github.com/CodeLynther/dclean/actions/workflows/ci.yml/badge.svg)](https://github.com/CodeLynther/dclean/actions/workflows/ci.yml)
 
@@ -25,20 +25,21 @@ CLI to find and remove development bloat. Scans configured paths, shows sizes in
 ## Installation
 
 ```bash
-npm install -g dclean
+npm install -g dclean-cli
 ```
 
-Scoped package (same CLI):
+Alternative install names (same `dclean` command):
 
 ```bash
+npm install -g dev-cleaner
 npm install -g @codelynther/dclean
 ```
 
 Try without installing:
 
 ```bash
-npx dclean --init
-npx dclean --node-modules --dry-run
+npx dclean-cli --init
+npx dclean-cli --node-modules --dry-run
 ```
 
 From source:

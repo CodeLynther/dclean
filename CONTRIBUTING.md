@@ -39,10 +39,11 @@ This repo publishes two npm packages on each release:
 
 | Package | Role |
 |---------|------|
-| `dclean` | Public install name (`packages/dclean`, thin wrapper) |
+| `dclean-cli` | Public install name (`packages/dclean-cli`, thin wrapper) |
+| `dev-cleaner` | Alternative install name (`packages/dev-cleaner`, thin wrapper) |
 | `@codelynther/dclean` | Core package with all source code |
 
-Keep versions in sync. The publish workflow releases `@codelynther/dclean` first, then `dclean`.
+Keep versions in sync. The publish workflow releases `@codelynther/dclean` first, then `dclean-cli` and `dev-cleaner`.
 
 ## Technical architecture
 
