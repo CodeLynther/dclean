@@ -295,6 +295,11 @@ async function main() {
     if (rawPaths.length === 0) {
       if (onlyGlobalScans) {
         scanPaths = [home]; // Default to home for global scans if no config
+      } else if (options.monitor) {
+        if (!options.silent) {
+          console.error(chalk.red('Error: No scan paths configured. Run dclean --init first, or pass --path.\n'));
+        }
+        process.exit(EXIT_ERROR);
       } else if (options.interactive === false) {
         showBanner();
         console.log(chalk.yellow('No scan paths configured. Use --init to set paths, or --path <dir> to scan one directory.\n'));
@@ -426,7 +431,7 @@ async function main() {
       process.exit(EXIT_SUCCESS);
     }
 
-    spinner.succeed('Scan complete!');
+    if (!options.silent) spinner.succeed('Scan complete!');
 
     const hasAnything =
       (scanResults.nodeModules && scanResults.nodeModules.count > 0) ||
