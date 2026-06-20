@@ -100,7 +100,7 @@ async function main() {
     .option('--no-interactive', 'Only run scan and display results, no cleanup prompts')
     .option('--yes', 'Auto-confirm move to Trash (use with caution)')
     .option('--verbose', 'Show debug output and full stack on errors')
-    .option('--init', 'Interactively choose scan paths and save to ~/.devclean.json')
+    .option('--init', 'Interactively choose scan paths and save to ~/.dclean/config.json')
     .option('--node-modules', 'Scan node_modules (in your path)')
     .option('--python', 'Scan Python venvs (in your path)')
     .option('--nvm', 'Scan NVM versions (~/.nvm)')

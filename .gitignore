@@ -20,6 +20,7 @@ Thumbs.db
 dist/
 build/
 coverage/
+*.tgz
 
 # Internal docs (not for public repo)
 .internal-docs/

@@ -1,17 +1,18 @@
 {
   "name": "@codelynther/dclean",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": false,
   "engines": {
     "node": ">=20.0.0"
   },
-  "description": "Clean up development environment bloat - node_modules, Python venvs, and more",
+  "description": "Clean dev bloat: node_modules, Xcode, NVM, venvs, build artifacts. Trash-safe CLI.",
   "main": "src/index.js",
   "bin": {
     "dclean": "./bin/cli.js"
   },
   "files": [
     "bin",
+    "config",
     "src"
   ],
   "scripts": {
@@ -24,7 +25,16 @@
     "node_modules",
     "disk-space",
     "developer-tools",
-    "cli"
+    "cli",
+    "xcode",
+    "deriveddata",
+    "nvm",
+    "venv",
+    "flutter",
+    "rust",
+    "gradle",
+    "cocoapods",
+    "macos"
   ],
   "author": "CodeLynther",
   "license": "MIT",
@@ -32,7 +42,7 @@
     "type": "git",
     "url": "https://github.com/CodeLynther/dclean.git"
   },
-  "homepage": "https://github.com/CodeLynther/dclean#readme",
+  "homepage": "https://codelynther.github.io/dclean/",
   "bugs": "https://github.com/CodeLynther/dclean/issues",
   "dependencies": {
     "chalk": "^4.1.2",

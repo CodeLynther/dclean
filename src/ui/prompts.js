@@ -89,7 +89,7 @@ async function promptForScanPaths(homeDir, opts = {}) {
     {
       type: 'confirm',
       name: 'saveToConfig',
-      message: 'Save these paths to ~/.devclean.json for next time?',
+      message: 'Save these paths to ~/.dclean/config.json for next time?',
       default: true,
     },
   ]);

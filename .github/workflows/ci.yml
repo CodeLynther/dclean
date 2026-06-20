@@ -31,3 +31,12 @@ jobs:
         run: |
           node bin/cli.js --help
           node bin/cli.js --node-modules --no-interactive --path .
+
+      - name: Verify tarball includes config
+        run: |
+          npm pack --dry-run | grep -q 'config/aiDevToolsPaths.js'
+          PACK=$(npm pack)
+          mkdir pack-test && cd pack-test
+          npm init -y >/dev/null 2>&1
+          npm install "../$PACK"
+          node -e "require('./node_modules/@codelynther/dclean/src/scanners/aiDevTools.js')"
