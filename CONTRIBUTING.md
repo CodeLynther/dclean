@@ -44,6 +44,8 @@ This repo publishes two npm packages on each release:
 
 Keep versions in sync. The publish workflow releases `@codelynther/dclean` first, then `dclean-cli`.
 
+`packages/dclean-cli/README.md` and `LICENSE` are symlinks to the repo root. `prepublishOnly` copies them to real files before publish so npm includes the readme on the registry page.
+
 ## Technical architecture
 
 D Clean is a modular, registry-driven CLI tool.

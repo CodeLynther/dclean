@@ -1,13 +1,18 @@
 {
   "name": "dclean-cli",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Clean dev bloat: node_modules, Xcode, NVM, venvs. Moves items to Trash.",
   "bin": {
     "dclean": "./bin/dclean.js"
   },
   "files": [
-    "bin"
+    "bin",
+    "README.md",
+    "LICENSE"
   ],
+  "scripts": {
+    "prepublishOnly": "node -e \"const fs=require('fs'),p=require('path');for (const f of ['README.md','LICENSE']) { const t=p.join(__dirname,f); fs.rmSync(t,{force:true}); fs.copyFileSync(p.join(__dirname,'../../',f), t); }\""
+  },
   "keywords": [
     "cleanup",
     "node_modules",
