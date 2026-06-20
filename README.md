@@ -28,7 +28,7 @@ CLI to find and remove development bloat. Scans configured paths, shows sizes in
 npm install -g dclean-cli
 ```
 
-Alternative install (same CLI):
+Core package (same `dclean` command):
 
 ```bash
 npm install -g @codelynther/dclean

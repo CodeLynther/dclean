@@ -22,6 +22,8 @@ build/
 coverage/
 *.tgz
 pack-test/
+packages/dclean-cli/node_modules/
+packages/dclean-cli/package-lock.json
 
 # Internal docs (not for public repo)
 .internal-docs/
