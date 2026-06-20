@@ -398,7 +398,7 @@ async function main() {
       scanAiDevTools: options.aiDevTools === true,
     };
     const scanResults = await runAllScans(scanPaths, scanOpts);
-    scanResults.basePathLabel = onlyGlobalScans ? '—' : (scanPaths.length === 1 ? toLabel(scanPaths[0]) : scanPaths.map(toLabel).join(', '));
+    scanResults.basePathLabel = onlyGlobalScans ? '(global)' : (scanPaths.length === 1 ? toLabel(scanPaths[0]) : scanPaths.map(toLabel).join(', '));
 
     if (options.monitor) {
       if (!options.silent) spinner.succeed('Scan complete!');

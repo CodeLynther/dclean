@@ -208,7 +208,7 @@ async function promptForCleanup(scanResults) {
   const choices = [];
 
   choices.push({
-    name: '⏭ Skip — do not delete anything (exit)',
+    name: '⏭ Skip: do not delete anything (exit)',
     value: '__skip__',
     checked: false,
   });
