@@ -56,7 +56,7 @@ Scanning logic lives in scanner classes extending `BaseScanner`. Scanners are re
 
 ### Monitor mode
 
-`--monitor` scans configured paths and sends a system notification when bloat crosses thresholds. It never deletes files. Cron usage requires scan paths from `dclean --init` (or `--path`).
+`--check` scans configured paths and sends a system notification when bloat crosses thresholds. It never deletes files. Cron usage requires scan paths from `dclean --init` (or `--path`).
 
 ### Safety model
 

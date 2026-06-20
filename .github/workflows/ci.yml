@@ -31,6 +31,7 @@ jobs:
         run: |
           node bin/cli.js --help
           node bin/cli.js --node-modules --no-interactive --path .
+          node bin/cli.js --check --silent --node-modules --path .
 
       - name: Verify tarball includes config
         run: |

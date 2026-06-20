@@ -95,40 +95,39 @@ dclean --no-interactive
 dclean --yes
 dclean --verbose
 dclean --init
-dclean --monitor --silent
+dclean --check --silent
 dclean --history
 dclean --help
 ```
 
 Results are sorted by size. Confirmed items go to Trash, not permanent delete.
 
-## Monitor mode
+## Check mode
 
-Scan on a schedule and get a system notification when bloat crosses thresholds. Monitor mode never deletes files.
+Scan for bloat and get a system notification when thresholds are crossed. Check mode never deletes files and does not prompt you to pick folders to clean. Run `dclean` separately when you want to review and move items to Trash.
 
-**Setup:** run `dclean --init` once before using monitor in cron. Monitor needs configured scan paths (or pass `--path`).
+When you run check in a terminal, you see scan progress, the largest folders to clean up, and a cron example. Use `--silent` for cron jobs so output stays quiet.
 
-```bash
-dclean --monitor --silent
-```
+**Setup:** run `dclean --init` once before using check in cron. Check needs configured scan paths (or pass `--path`).
 
-Defaults with `--monitor`:
+Defaults with `--check`:
 
 - Alert if one category (e.g. Xcode DerivedData) exceeds 5 GB
 - Alert if total reclaimable space exceeds 10 GB
+- Notifications and terminal summary include the largest folder paths to clean up
 
 Cron example (Sunday 6 PM):
 
 ```bash
-0 18 * * 0 /path/to/node /path/to/dclean --monitor --silent
+0 18 * * 0 /path/to/node /path/to/dclean --check --silent
 ```
 
 Find paths with `which node` and `which dclean`. Cron does not load nvm, so use absolute paths.
 
-Scope the monitor to specific scanners:
+Scope the check to specific scanners:
 
 ```bash
-dclean --monitor --xcode --nvm --silent
+dclean --check --xcode --nvm --silent
 ```
 
 ## Safety

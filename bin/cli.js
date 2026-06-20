@@ -16,6 +16,15 @@ const { logCleanup, printHistory } = require('../src/utils/history');
 const { formatBytes } = require('../src/utils/fileSize');
 const { loadConfig, getConfigPath, saveConfig } = require('../src/utils/config');
 const { sendNotification } = require('../src/utils/notifications');
+const {
+  getTotalReclaimable,
+  getCheckAlerts,
+  shouldNotify,
+  getCleanupPaths,
+  buildNotificationMessage,
+  isCheckInteractive,
+  printCheckSummary,
+} = require('../src/utils/check');
 const logger = require('../src/utils/logger');
 
 const pkg = require('../package.json');
@@ -111,7 +120,7 @@ async function main() {
     .option('--flutter', 'Scan Flutter build directories (in your path)')
     .option('--xcode', 'Scan Xcode DerivedData and build directories')
     .option('--ai-dev-tools', 'Scan AI dev tool data (Cursor, Claude, Antigravity, etc.)')
-    .option('--monitor', 'Background monitor mode: only notify if bloat exceeds thresholds')
+    .option('--check', 'Check for bloat and notify if thresholds exceeded (never deletes)')
     .option('--history', 'Show cleanup history and exit')
     .parse();
 
@@ -141,8 +150,8 @@ async function main() {
     options.xcode === true ||
     options.aiDevTools === true;
 
-  if (options.monitor && !anyScanType) {
-    // In monitor mode, if no specific scanners are requested, scan the most impactful ones
+  if (options.check && !anyScanType) {
+    // In check mode, if no specific scanners are requested, scan the most impactful ones
     options.nodeModules = true;
     options.nvm = true;
     options.xcode = true;
@@ -295,7 +304,7 @@ async function main() {
     if (rawPaths.length === 0) {
       if (onlyGlobalScans) {
         scanPaths = [home]; // Default to home for global scans if no config
-      } else if (options.monitor) {
+      } else if (options.check) {
         if (!options.silent) {
           console.error(chalk.red('Error: No scan paths configured. Run dclean --init first, or pass --path.\n'));
         }
@@ -351,6 +360,8 @@ async function main() {
   process.on('SIGINT', handleCancel);
 
   try {
+    const checkFeedback = isCheckInteractive(options);
+
     if (!options.silent) {
       showBanner();
 
@@ -375,10 +386,12 @@ async function main() {
         }
       }
       console.log('');
+    } else if (checkFeedback) {
+      console.log(chalk.gray('Check mode — scanning configured paths...\n'));
     }
 
     const spinner = createSpinner('Scanning...');
-    if (!options.silent) spinner.start();
+    if (!options.silent || checkFeedback) spinner.start();
     const progressCallback = (dirPath) => {
       const name = path.basename(dirPath);
       const short = name.length > 35 ? name.slice(0, 32) + '…' : name;
@@ -400,34 +413,27 @@ async function main() {
     const scanResults = await runAllScans(scanPaths, scanOpts);
     scanResults.basePathLabel = onlyGlobalScans ? '(global)' : (scanPaths.length === 1 ? toLabel(scanPaths[0]) : scanPaths.map(toLabel).join(', '));
 
-    if (options.monitor) {
-      if (!options.silent) spinner.succeed('Scan complete!');
-      const totalReclaimable =
-        (scanResults.nodeModules?.totalSize || 0) +
-        (scanResults.pythonVenvs?.totalSize || 0) +
-        (scanResults.nvmVersions?.totalSize || 0) +
-        (scanResults.pods?.totalSize || 0) +
-        (scanResults.rustTargets?.totalSize || 0) +
-        (scanResults.gradleBuilds?.totalSize || 0) +
-        (scanResults.cmakeBuilds?.totalSize || 0) +
-        (scanResults.flutterBuilds?.totalSize || 0) +
-        (scanResults.xcodeBuilds?.totalSize || 0);
+    if (options.check) {
+      if (!options.silent || checkFeedback) spinner.succeed('Scan complete!');
 
-      const thresholdPerCategory = 5 * 1024 * 1024 * 1024; // 5 GB
-      const thresholdTotal = 10 * 1024 * 1024 * 1024; // 10 GB
+      const totalReclaimable = getTotalReclaimable(scanResults);
+      const alerts = getCheckAlerts(scanResults);
+      const notified = shouldNotify(totalReclaimable, alerts);
+      const cleanupPaths = getCleanupPaths(scanResults, { max: 8 });
 
-      const alerts = [];
-      if (scanResults.xcodeBuilds?.totalSize > thresholdPerCategory) alerts.push('Xcode DerivedData');
-      if (scanResults.nvmVersions?.totalSize > thresholdPerCategory) alerts.push('NVM Versions');
-      if (scanResults.nodeModules?.totalSize > thresholdPerCategory) alerts.push('node_modules');
-
-      if (totalReclaimable > thresholdTotal || alerts.length > 0) {
-        const message = alerts.length > 0
-          ? `${alerts.join(' and ')} are taking up significant space. Total reclaimable: ${formatBytes(totalReclaimable)}.`
-          : `You have ${formatBytes(totalReclaimable)} of reclaimable dev bloat.`;
-
-        await sendNotification('🧹 D Clean Alert', `${message} Run dclean to reclaim space.`);
+      if (notified) {
+        const message = buildNotificationMessage({
+          totalReclaimable,
+          alerts,
+          cleanupPaths: getCleanupPaths(scanResults, { max: 5 }),
+        });
+        await sendNotification('🧹 D Clean Alert', message);
       }
+
+      if (checkFeedback) {
+        printCheckSummary({ totalReclaimable, alerts, notified, cleanupPaths });
+      }
+
       process.exit(EXIT_SUCCESS);
     }
 
