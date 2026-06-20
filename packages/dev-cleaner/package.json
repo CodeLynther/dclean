@@ -1,10 +1,9 @@
 {
-  "name": "dev-cleaner",
+  "name": "@codelynther/dev-cleaner",
   "version": "0.2.0",
   "description": "Clean dev bloat: node_modules, Xcode, NVM, venvs. Moves items to Trash.",
   "bin": {
-    "dclean": "./bin/dclean.js",
-    "dev-cleaner": "./bin/dclean.js"
+    "dclean": "./bin/dclean.js"
   },
   "files": [
     "bin"

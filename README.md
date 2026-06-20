@@ -31,7 +31,7 @@ npm install -g dclean-cli
 Alternative install names (same `dclean` command):
 
 ```bash
-npm install -g dev-cleaner
+npm install -g @codelynther/dev-cleaner
 npm install -g @codelynther/dclean
 ```
 

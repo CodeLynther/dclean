@@ -47,7 +47,7 @@ jobs:
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
-      - name: Publish dev-cleaner
+      - name: Publish @codelynther/dev-cleaner
         working-directory: packages/dev-cleaner
         run: |
           npm install
